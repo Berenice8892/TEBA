@@ -1,0 +1,57 @@
+body {
+    background: #f4f4f4;
+}
+
+h2 {
+    color: #003f7f;
+}
+.navbar a {
+    color: white !important;
+}
+
+.navbar a:visited {
+    color: white !important;
+}
+
+.navbar a:hover {
+    color: #ffea00 !important;  /* amarillo al pasar el mouse */
+}
+
+.navbar a:active {
+    color: #ffea00 !important;
+}
+.nav-link.active {
+    background-color: #002a57 !important;
+    color: white !important;
+    border-radius: 5px;
+}
+/* Dropdown TEBAEV: color de texto negro */
+.navbar .dropdown-menu a.dropdown-item {
+    color: #000 !important;  /* texto negro */
+}
+
+.navbar .dropdown-menu a.dropdown-item:hover {
+    background-color: #0d6efd; /* azul Bootstrap al pasar el mouse */
+    color: #fff !important;    /* texto blanco al hover */
+}
+.filter-btn {
+  transition: 0.3s;
+}
+
+.filter-btn.active {
+  background-color: #0d6efd !important;
+  color: white !important;
+}
+
+.horario-item {
+  transition: transform 0.2s, opacity 0.2s;
+  border-radius: 10px;
+}
+
+.horario-item:hover {
+  transform: translateY(-5px);
+}
+
+.horario-card {
+  transition: opacity 0.3s, transform 0.3s;
+}

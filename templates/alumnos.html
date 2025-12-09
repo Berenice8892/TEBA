@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Alumnos - TEBAEV{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Lista de Alumnos</h2>
+
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>No. Control</th>
+                <th>Nombre</th>
+                <th>Modalidad</th>
+                <th>Plan de Estudios</th>
+                <th>Periodo Actual</th>
+                <th>Correo</th>
+                <th>Escuela</th>
+                <th>Calificaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in datos %}
+            <tr>
+                <td>{{ item.alumno.no_control }}</td>
+                <td>{{ item.alumno.nombre }}</td>
+                <td>{{ item.alumno.modalidad }}</td>
+                <td>{{ item.alumno.plan_estudios }}</td>
+                <td>{{ item.alumno.periodo_actual }}</td>
+                <td>{{ item.alumno.correo }}</td>
+                <td>{{ item.alumno.escuela_procedencia }}</td>
+                <td>
+                    {% for c in item.calificaciones %}
+                        <strong>{{ c.materia }}:</strong> {{ c.calificacion }}<br>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Editar Calificación</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Materia:</label>
+    <input type="text" name="materia" value="{{ calificacion.materia }}" required><br><br>
+
+    <label>Calificación:</label>
+    <input type="number" name="calificacion" step="0.01" value="{{ calificacion.calificacion }}" required><br><br>
+
+    <label>Periodo:</label>
+    <input type="text" name="periodo" value="{{ calificacion.periodo }}" required><br><br>
+
+    <button type="submit">Guardar cambios</button>
+</form>
+
+<a href="{% url 'detalle_alumno_docente' calificacion.alumno.no_control %}">
+    Regresar
+</a>
+{% endblock %}

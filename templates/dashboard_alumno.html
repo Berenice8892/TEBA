@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Cabecera con nombre y número de control -->
+<div class="text-center mb-5">
+    <h2 class="fw-bold">Bienvenido, {{ alumno.nombre }}</h2>
+    <p class="text-muted"><strong>Número de control:</strong> {{ alumno.no_control }}</p>
+</div>
+
+<!-- Botones de acción -->
+<div class="d-flex justify-content-center mb-5 gap-3">
+    <a href="{% url 'editar_alumno' alumno.no_control %}" class="btn btn-outline-primary btn-lg">
+        <i class="bi bi-pencil-square"></i> Editar datos
+    </a>
+    <a href="{% url 'cambiar_contraseña' alumno.no_control %}" class="btn btn-outline-warning btn-lg">
+        <i class="bi bi-lock-fill"></i> Cambiar contraseña
+    </a>
+</div>
+
+<!-- PESTAÑAS -->
+<ul class="nav nav-tabs mb-3" id="dashboardTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="perfil-tab" data-bs-toggle="tab" data-bs-target="#perfil" type="button" role="tab" aria-controls="perfil" aria-selected="false">
+      Perfil
+    </button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="horario-tab" data-bs-toggle="tab" data-bs-target="#horario" type="button" role="tab" aria-controls="horario" aria-selected="false">
+      Horario de Clases
+    </button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="calificaciones-tab" data-bs-toggle="tab" data-bs-target="#calificaciones" type="button" role="tab" aria-controls="calificaciones" aria-selected="false">
+      Calificaciones
+    </button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="pdf-tab" data-bs-toggle="tab" data-bs-target="#pdf" type="button" role="tab" aria-controls="pdf" aria-selected="false">
+      Descargar PDF
+    </button>
+  </li>
+</ul>
+
+<div class="tab-content" id="dashboardTabContent">
+
+  <!-- TAB PERFIL -->
+  <div class="tab-pane fade" id="perfil" role="tabpanel" aria-labelledby="perfil-tab">
+    <div class="row g-4 mb-5">
+        <div class="col-md-3 text-center">
+            {% if alumno.avatar %}
+                <img src="{{ alumno.avatar.url }}" alt="Avatar" class="img-fluid rounded-circle mb-3" style="width:150px;height:150px;">
+            {% else %}
+                <img src="https://via.placeholder.com/150" alt="Avatar" class="img-fluid rounded-circle mb-3">
+            {% endif %}
+            <!-- FORMULARIO PARA SUBIR AVATAR -->
+            <form action="{% url 'actualizar_avatar' alumno.no_control %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="avatar" accept="image/*" class="form-control mb-2" required>
+                <button type="submit" class="btn btn-outline-secondary btn-sm w-100">Cambiar foto</button>
+            </form>
+        </div>
+        <div class="col-md-9">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="card shadow-sm text-center p-3 h-100">
+                        <h6>Nombre</h6>
+                        <p class="mb-0">{{ alumno.nombre }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card shadow-sm text-center p-3 h-100">
+                        <h6>Número de control</h6>
+                        <p class="mb-0">{{ alumno.no_control }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card shadow-sm text-center p-3 h-100">
+                        <h6>Correo</h6>
+                        <p class="mb-0">{{ alumno.correo }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card shadow-sm text-center p-3 h-100">
+                        <h6>Tutor</h6>
+                        <p class="mb-0">{{ alumno.tutor }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card shadow-sm text-center p-3 h-100">
+                        <h6>Periodo actual</h6>
+                        <p class="mb-0">{{ alumno.periodo_actual }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- TAB HORARIO -->
+<div class="tab-pane fade" id="horario" role="tabpanel" aria-labelledby="horario-tab">
+
+    <!-- Botones de filtrado -->
+    <div class="text-center mb-4">
+        <div class="btn-group" role="group">
+            <button class="btn btn-primary filter-btn" data-day="all">Todas</button>
+            <button class="btn btn-outline-primary filter-btn" data-day="Lunes">Lunes</button>
+            <button class="btn btn-outline-primary filter-btn" data-day="Martes">Martes</button>
+            <button class="btn btn-outline-primary filter-btn" data-day="Miércoles">Miércoles</button>
+            <button class="btn btn-outline-primary filter-btn" data-day="Jueves">Jueves</button>
+            <button class="btn btn-outline-primary filter-btn" data-day="Viernes">Viernes</button>
+        </div>
+    </div>
+
+    <div class="row g-3" id="horario-container">
+        {% if horario %}
+            {% for h in horario %}
+            <div class="col-md-4 horario-card" data-day="{{ h.dia }}">
+                <div class="card shadow-sm h-100 horario-item"
+                    style="border-left: 5px solid
+                    {% if h.materia == 'Matemáticas' %}#28a745
+                    {% elif h.materia == 'Español' %}#ffc107
+                    {% elif h.materia == 'Historia' %}#dc3545
+                    {% elif h.materia == 'Ciencias' %}#17a2b8
+                    {% elif h.materia == 'Inglés' %}#6610f2
+                    {% else %}#6c757d
+                    {% endif %};">
+
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">{{ h.materia }}</h5>
+                        <p class="mb-1"><strong>📅 Día:</strong> {{ h.dia }}</p>
+                        <p class="mb-1"><strong>⏰ Hora:</strong> {{ h.hora_inicio|time:"H:i" }} - {{ h.hora_fin|time:"H:i" }}</p>
+                        <p class="mb-0"><strong>🏫 Salón:</strong> {{ h.salon }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 text-center py-3">No tienes clases asignadas</div>
+        {% endif %}
+    </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const buttons = document.querySelectorAll(".filter-btn");
+    const cards = document.querySelectorAll(".horario-card");
+
+    buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+
+            // Activar botón seleccionado
+            buttons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            const day = btn.dataset.day;
+
+            cards.forEach(card => {
+                if (day === "all" || card.dataset.day === day) {
+                    card.style.display = "block";
+                    card.style.opacity = "1";
+                    card.style.transform = "scale(1)";
+                } else {
+                    card.style.opacity = "0";
+                    card.style.transform = "scale(0.9)";
+                    setTimeout(() => card.style.display = "none", 200);
+                }
+            });
+        });
+    });
+});
+</script>
+
+
+  <!-- TAB CALIFICACIONES -->
+  <div class="tab-pane fade" id="calificaciones" role="tabpanel" aria-labelledby="calificaciones-tab">
+    <div class="card shadow-sm mb-5">
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0 text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>Materia</th>
+                        <th>Calificación</th>
+                        <th>Periodo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in calificaciones %}
+                    <tr>
+                        <td>{{ c.materia }}</td>
+                        <td>
+                            {% if c.calificacion >= 9 %}
+                                <span class="badge bg-success">{{ c.calificacion }}</span>
+                            {% elif c.calificacion >= 7 %}
+                                <span class="badge bg-warning text-dark">{{ c.calificacion }}</span>
+                            {% else %}
+                                <span class="badge bg-danger">{{ c.calificacion }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ c.periodo }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+  </div>
+
+  <!-- TAB DESCARGAR PDF -->
+  <div class="tab-pane fade" id="pdf" role="tabpanel" aria-labelledby="pdf-tab">
+    <div class="text-center py-5">
+        <h5>Descarga tu reporte de calificaciones</h5>
+        <a href="{% url 'descargar_calificaciones_pdf' alumno.no_control %}" class="btn btn-primary btn-lg mt-3">
+            <i class="bi bi-file-earmark-pdf"></i> Descargar PDF
+        </a>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

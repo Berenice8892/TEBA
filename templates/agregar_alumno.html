@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Agregar Alumno</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <!-- Datos Generales -->
+    <div class="card mb-3">
+      <div class="card-header">
+        <button class="btn btn-link text-decoration-none" type="button" data-bs-toggle="collapse" data-bs-target="#datosGenerales">
+          Datos Generales
+        </button>
+      </div>
+      <div id="datosGenerales" class="collapse show card-body">
+        <div class="mb-3">
+          <label for="no_control" class="form-label">Número de control:</label>
+          <input type="text" class="form-control" name="no_control" id="no_control" required>
+        </div>
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre completo:</label>
+          <input type="text" class="form-control" name="nombre" id="nombre" required>
+        </div>
+        <div class="mb-3">
+          <label for="modalidad" class="form-label">Modalidad:</label>
+          <input type="text" class="form-control" name="modalidad" id="modalidad">
+        </div>
+        <div class="mb-3">
+          <label for="plan_estudios" class="form-label">Plan de estudios:</label>
+          <input type="text" class="form-control" name="plan_estudios" id="plan_estudios" required>
+        </div>
+        <div class="mb-3">
+          <label for="modulo_especialidad" class="form-label">Módulo de especialidad:</label>
+          <input type="text" class="form-control" name="modulo_especialidad" id="modulo_especialidad" required>
+        </div>
+        <div class="mb-3">
+          <label for="creditos_acumulados" class="form-label">Créditos acumulados:</label>
+          <input type="number" step="0.1" class="form-control" name="creditos_acumulados" id="creditos_acumulados" value="0.0">
+        </div>
+        <div class="mb-3">
+          <label for="situacion_vigencia" class="form-label">Situación de vigencia:</label>
+          <input type="text" class="form-control" name="situacion_vigencia" id="situacion_vigencia" required>
+        </div>
+        <div class="mb-3">
+          <label for="periodo_ingreso" class="form-label">Periodo de ingreso:</label>
+          <input type="text" class="form-control" name="periodo_ingreso" id="periodo_ingreso" required>
+        </div>
+        <div class="mb-3">
+          <label for="periodos_convalidados" class="form-label">Periodos convalidados:</label>
+          <input type="number" class="form-control" name="periodos_convalidados" id="periodos_convalidados" value="0">
+        </div>
+        <div class="mb-3">
+          <label for="periodo_actual" class="form-label">Periodo actual:</label>
+          <input type="text" class="form-control" name="periodo_actual" id="periodo_actual" required>
+        </div>
+        <div class="mb-3">
+          <label for="clave_curp" class="form-label">CURP:</label>
+          <input type="text" class="form-control" name="clave_curp" id="clave_curp" required>
+        </div>
+        <div class="mb-3">
+          <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento:</label>
+          <input type="date" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dirección -->
+    <div class="card mb-3">
+      <div class="card-header">
+        <button class="btn btn-link text-decoration-none" type="button" data-bs-toggle="collapse" data-bs-target="#direccion">
+          Dirección
+        </button>
+      </div>
+      <div id="direccion" class="collapse card-body">
+        <div class="mb-3">
+          <label for="calle" class="form-label">Calle:</label>
+          <input type="text" class="form-control" name="calle" id="calle" required>
+        </div>
+        <div class="mb-3">
+          <label for="numero" class="form-label">Número:</label>
+          <input type="text" class="form-control" name="numero" id="numero" required>
+        </div>
+        <div class="mb-3">
+          <label for="colonia" class="form-label">Colonia:</label>
+          <input type="text" class="form-control" name="colonia" id="colonia" required>
+        </div>
+        <div class="mb-3">
+          <label for="ciudad" class="form-label">Ciudad:</label>
+          <input type="text" class="form-control" name="ciudad" id="ciudad" required>
+        </div>
+        <div class="mb-3">
+          <label for="cp" class="form-label">Código Postal:</label>
+          <input type="text" class="form-control" name="cp" id="cp" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contacto -->
+    <div class="card mb-3">
+      <div class="card-header">
+        <button class="btn btn-link text-decoration-none" type="button" data-bs-toggle="collapse" data-bs-target="#contacto">
+          Contacto
+        </button>
+      </div>
+      <div id="contacto" class="collapse card-body">
+        <div class="mb-3">
+          <label for="telefono_domicilio" class="form-label">Teléfono domicilio:</label>
+          <input type="text" class="form-control" name="telefono_domicilio" id="telefono_domicilio">
+        </div>
+        <div class="mb-3">
+          <label for="telefono_celular" class="form-label">Teléfono celular:</label>
+          <input type="text" class="form-control" name="telefono_celular" id="telefono_celular">
+        </div>
+        <div class="mb-3">
+          <label for="correo" class="form-label">Correo electrónico:</label>
+          <input type="email" class="form-control" name="correo" id="correo" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- Otros -->
+    <div class="card mb-3">
+      <div class="card-header">
+        <button class="btn btn-link text-decoration-none" type="button" data-bs-toggle="collapse" data-bs-target="#otros">
+          Otros
+        </button>
+      </div>
+      <div id="otros" class="collapse card-body">
+        <div class="mb-3">
+          <label for="escuela_procedencia" class="form-label">Escuela de procedencia:</label>
+          <input type="text" class="form-control" name="escuela_procedencia" id="escuela_procedencia" required>
+        </div>
+        <div class="mb-3">
+          <label for="tutor" class="form-label">Tutor:</label>
+          <input type="text" class="form-control" name="tutor" id="tutor">
+        </div>
+        <div class="mb-3">
+          <label for="contraseña" class="form-label">Contraseña:</label>
+          <input type="password" class="form-control" name="contraseña" id="contraseña" required>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Agregar Alumno</button>
+  </form>
+</div>
+{% endblock %}

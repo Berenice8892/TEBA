@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Lista de Alumnos</h2>
+    <form method="GET" class="mb-3">
+        <input type="text" name="q" placeholder="Buscar por nombre o número de control">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>No. Control</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for alumno in alumnos %}
+            <tr>
+                <td>{{ alumno.no_control }}</td>
+                <td>{{ alumno.nombre }}</td>
+                <td>{{ alumno.correo }}</td>
+                <td>
+                    <a href="{% url 'detalle_alumno_docente' alumno.no_control %}" class="btn btn-sm btn-info">Ver</a>
+                    <a href="{% url 'editar_alumno_docente' alumno.no_control %}" class="btn btn-sm btn-warning">Editar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

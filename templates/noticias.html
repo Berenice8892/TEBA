@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Noticias - TEBAEV{% endblock %}
+
+{% block content %}
+
+<h2>Noticias y Comunicados</h2>
+
+{% for n in noticias %}
+<div class="card mt-3">
+    {% if n.imagen %}
+        <img src="{{ n.imagen.url }}" class="card-img-top">
+    {% endif %}
+
+    <div class="card-body">
+        <h4>{{ n.titulo }}</h4>
+        <small>{{ n.fecha }}</small>
+        <p>{{ n.contenido }}</p>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

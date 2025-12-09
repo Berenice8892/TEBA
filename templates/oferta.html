@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+/* ======== ESTILO GENERAL ======== */
+
+.titulo-tebaev {
+    text-align: center;
+    color: #009045;
+    font-weight: bold;
+    margin-bottom: 30px;
+    font-size: 32px;
+}
+
+.tabs-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 12px 25px;
+    border: none;
+    background: #e6e6e6;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 6px;
+    margin: 0 8px;
+}
+
+.tab-btn.active {
+    background: #009045;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Animación */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ======== EVENTOS ======== */
+
+.evento-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    margin-bottom: 30px;
+}
+
+.evento-header {
+    background: #009045;
+    color: white;
+    padding: 12px 18px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.evento-descripcion {
+    padding: 15px 20px;
+    font-size: 16px;
+}
+
+.carousel-item img {
+    border-radius: 10px;
+    max-height: 370px;
+    object-fit: cover;
+}
+</style>
+
+<div class="container mt-4">
+
+    <h1 class="titulo-tebaev">Oferta Educativa y Actividades TEBAEV</h1>
+
+    <!-- ===================== -->
+    <!--       PESTAÑAS        -->
+    <!-- ===================== -->
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="openTab('tab-1')">Actividades Deportivas</button>
+        <button class="tab-btn" onclick="openTab('tab-2')">Actividades Artísticas</button>
+        <button class="tab-btn" onclick="openTab('tab-3')">Taller de Cocina</button>
+    </div>
+
+    <!-- ===================== -->
+    <!--   CONTENIDO PESTAÑAS  -->
+    <!-- ===================== -->
+
+    <!-- TAB 1 -->
+    <div id="tab-1" class="tab-content active">
+        <h2>Actividades Físicas y Deportivas</h2>
+        <p>
+            Torneos contínuos de fútbol que fomentan la actividad física, el trabajo en equipo 
+            y el espíritu deportivo entre nuestros alumnos.
+        </p>
+    </div>
+
+    <!-- TAB 2 -->
+    <div id="tab-2" class="tab-content">
+        <h2>Actividades artísticas y culturales</h2>
+        <p>
+            En el TEBAEV contamos con múltiples actividades culturales: talleres de danza, 
+            bailes folklóricos, concursos y presentaciones estudiantiles.
+            <br><br>
+            Además contamos con actividades creativas como carpintería, donde los alumnos 
+            elaboran manualidades desde cero, aprendiendo a transformar materiales 
+            en piezas únicas llenas de valor.
+        </p>
+    </div>
+
+    <!-- TAB 3 -->
+    <div id="tab-3" class="tab-content">
+        <h2>Taller de cocina</h2>
+        <p>
+            Este taller introduce a los estudiantes al mundo culinario, desde técnicas básicas 
+            hasta recetas completas. Se promueve la creatividad, la higiene y el trabajo en equipo, 
+            además de desarrollar habilidades prácticas para la vida cotidiana.
+        </p>
+    </div>
+
+    <hr class="mt-5 mb-4">
+
+    <!-- ============================= -->
+    <!--    EVENTOS Y ACTIVIDADES     -->
+    <!-- ============================= -->
+
+    <h2 class="titulo-tebaev">Eventos y Actividades Destacadas</h2>
+
+    <!-- EVENTO 1: ESCOLTA -->
+    <div class="evento-card">
+
+        <div class="evento-header">Participación de la Escolta</div>
+
+        <div id="eventoEscolta" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+                <!-- FOTO 1 -->
+                <div class="carousel-item active">
+                    <img src="{% static 'img/eventos/escolta1.jpg' %}" class="d-block w-100" alt="Escolta TEBAEV">
+                </div>
+
+                <!-- FOTO 2 -->
+                <div class="carousel-item">
+                    <img src="{% static 'img/eventos/escolta2.jpg' %}" class="d-block w-100" alt="Escolta TEBAEV 2">
+                </div>
+
+                <!-- FOTO 3 -->
+                <div class="carousel-item">
+                    <img src="{% static 'img/eventos/escolta3.jpg' %}" class="d-block w-100" alt="Escolta TEBAEV 3">
+                </div>
+
+            </div>
+
+            <!-- CONTROLES -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#eventoEscolta" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#eventoEscolta" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+
+        <div class="evento-descripcion">
+            <p>
+                Nuestra escolta tuvo una destacada participación en el evento cívico regional, 
+                representando al TEBAEV con orgullo, disciplina y compromiso.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===================== -->
+<!--   SCRIPT PESTAÑAS     -->
+<!-- ===================== -->
+<script>
+function openTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+
+    event.target.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+}
+</script>
+
+{% endblock %}

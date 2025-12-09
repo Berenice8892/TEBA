@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h1>Detalle del Alumno: {{ alumno.nombre }}</h1>
+
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-success">{{ msg }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Formulario de edición de datos del alumno -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">Datos del Alumno</div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label>No. Control</label>
+                    <input type="text" class="form-control" name="no_control" value="{{ alumno.no_control }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Nombre</label>
+                    <input type="text" class="form-control" name="nombre" value="{{ alumno.nombre }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Correo</label>
+                    <input type="email" class="form-control" name="correo" value="{{ alumno.correo }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Tutor</label>
+                    <input type="text" class="form-control" name="tutor" value="{{ alumno.tutor }}">
+                </div>
+
+                <button type="submit" class="btn btn-success">Guardar cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabla de calificaciones -->
+    <div class="card">
+        <div class="card-header bg-info text-white">Calificaciones</div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Materia</th>
+                        <th>Calificación</th>
+                        <th>Periodo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cal in calificaciones %}
+                    <tr>
+                        <td>{{ cal.materia }}</td>
+                        <td>{{ cal.calificacion }}</td>
+                        <td>{{ cal.periodo }}</td>
+                        <td>
+                            <a href="{% url 'editar_calificacion' cal.id %}" class="btn btn-sm btn-warning">Editar</a>
+
+                            <a href="{% url 'eliminar_calificacion' cal.id %}"
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('¿Seguro que deseas eliminar esta calificación?');">
+                                Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Formulario rápido para agregar calificación -->
+            <h5>Agregar Calificación</h5>
+            <form method="POST" action="{% url 'agregar_calificacion' alumno.no_control %}">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <input type="text" class="form-control" name="materia" placeholder="Materia" required>
+                    </div>
+
+                    <div class="col-md-3 mb-2">
+                        <input type="number" step="0.01" class="form-control" name="calificacion" placeholder="Calificación" required>
+                    </div>
+
+                    <div class="col-md-3 mb-2">
+                        <input type="text" class="form-control" name="periodo" placeholder="Periodo" required>
+                    </div>
+
+                    <div class="col-md-2 mb-2">
+                        <button class="btn btn-success w-100">Agregar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

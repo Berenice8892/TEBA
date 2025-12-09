@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Editar Datos - {{ alumno.nombre }}</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label>Nombre:</label><br>
+    <input type="text" name="nombre" value="{{ alumno.nombre }}"><br><br>
+
+    <label>Correo:</label><br>
+    <input type="email" name="correo" value="{{ alumno.correo }}"><br><br>
+
+    <label>Tutor:</label><br>
+    <input type="text" name="tutor" value="{{ alumno.tutor }}"><br><br>
+
+    <button type="submit">Guardar cambios</button>
+</form>
+{% endblock %}

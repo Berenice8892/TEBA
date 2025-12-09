@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Cambiar Contraseña - {{ alumno.nombre }}</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label>Contraseña actual:</label><br>
+    <input type="password" name="contraseña_actual" required><br><br>
+
+    <label>Nueva contraseña:</label><br>
+    <input type="password" name="contraseña_nueva" required><br><br>
+
+    <label>Confirmar nueva contraseña:</label><br>
+    <input type="password" name="confirmar_contraseña" required><br><br>
+
+    <button type="submit">Actualizar contraseña</button>
+</form>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Planteles - TEBAEV{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-center text-primary">Nuestros Planteles</h2>
+
+<div class="row g-4">
+    <!-- Sede principal destacada -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card border-primary shadow-sm h-100">
+            <div class="card-body bg-light">
+                <h4 class="card-title text-primary">TEBAEV Nopaletepec</h4>
+                <p class="card-text">
+                    <strong>Dirección:</strong> Calle José María Morelos y Pavón<br>
+                    <strong>Municipio:</strong> Nopaletepec, Veracruz<br>
+                    <strong>Teléfono:</strong> 2871181893
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Otros planteles dinámicos -->
+    {% for p in planteles %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ p.nombre }}</h5>
+                <p class="card-text">
+                    <strong>Dirección:</strong> {{ p.direccion }}<br>
+                    <strong>Municipio:</strong> {{ p.municipio }}<br>
+                    <strong>Teléfono:</strong> {{ p.telefono }}
+                </p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center text-muted">
+        No hay planteles registrados.
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

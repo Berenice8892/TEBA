@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+{% block title %}Inicio - TEBAEV{% endblock %}
+
+{% block content %}
+
+<!-- Título de bienvenida -->
+<div class="text-center mt-4">
+    <h2>Bienvenido al TEBAEV</h2>
+    <p class="text-muted">Portal Oficial del Telebachillerato del Estado de Veracruz</p>
+</div>
+
+<!-- BANNER PROFESIONAL -->
+<div id="banner" class="carousel slide mt-4" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+            <img src="/static/img/slider1.jpg" class="d-block w-100" alt="">
+            <div class="carousel-caption d-none d-md-block text-start" style="background: rgba(0,0,0,0.5); padding:20px; border-radius:8px;">
+                <h2 class="fw-bold">Bienvenido al TEBAEV</h2>
+                <p>Portal Oficial del Telebachillerato del Estado de Veracruz</p>
+                <a href="/" class="btn btn-primary btn-lg">Inicio</a>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-item">
+            <img src="/static/img/slider2.jpg" class="d-block w-100" alt="">
+            <div class="carousel-caption d-none d-md-block text-start" style="background: rgba(0,0,0,0.5); padding:20px; border-radius:8px;">
+                <h2 class="fw-bold">Oferta Educativa</h2>
+                <p>Conoce los programas y planes de estudio disponibles</p>
+                <a href="/oferta" class="btn btn-primary btn-lg">Ver Oferta</a>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-item">
+            <img src="/static/img/slider3.jpg" class="d-block w-100" alt="">
+            <div class="carousel-caption d-none d-md-block text-start" style="background: rgba(0,0,0,0.5); padding:20px; border-radius:8px;">
+                <h2 class="fw-bold">Planteles TEBAEV</h2>
+                <p>Encuentra tu plantel más cercano y comienza tu educación</p>
+                <a href="/planteles" class="btn btn-primary btn-lg">Ver Planteles</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#banner" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#banner" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+    </button>
+
+    <!-- Indicadores -->
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#banner" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#banner" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#banner" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+</div>
+
+<!-- SECCIONES PRINCIPALES (tarjetas tipo SIE) -->
+<div class="container mt-5 mb-5">
+    <div class="row g-4 justify-content-center">
+
+        <!-- Inicio -->
+        <div class="col-md-2 col-sm-4 col-6">
+            <div class="card text-center h-100 shadow-sm">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <i class="bi bi-house-fill display-4 mb-2"></i>
+                    <h6 class="card-title">Inicio</h6>
+                    <a href="/" class="stretched-link"></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Oferta Educativa -->
+        <div class="col-md-2 col-sm-4 col-6">
+            <div class="card text-center h-100 shadow-sm">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <i class="bi bi-journal-bookmark-fill display-4 mb-2"></i>
+                    <h6 class="card-title">Oferta Educativa</h6>
+                    <a href="/oferta" class="stretched-link"></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Planteles -->
+        <div class="col-md-2 col-sm-4 col-6">
+            <div class="card text-center h-100 shadow-sm">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <i class="bi bi-building display-4 mb-2"></i>
+                    <h6 class="card-title">Planteles</h6>
+                    <a href="/planteles" class="stretched-link"></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contacto -->
+        <div class="col-md-2 col-sm-4 col-6">
+            <div class="card text-center h-100 shadow-sm">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <i class="bi bi-envelope-fill display-4 mb-2"></i>
+                    <h6 class="card-title">Contacto</h6>
+                    <a href="/contacto" class="stretched-link"></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEBAEV (Acceso SIE) -->
+        <div class="col-md-2 col-sm-4 col-6">
+            <div class="card text-center h-100 shadow-sm">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <i class="bi bi-person-badge-fill display-4 mb-2"></i>
+                    <h6 class="card-title">TEBAEV</h6>
+                    <a href="#" class="stretched-link" data-bs-toggle="dropdown"></a>
+            <!-- Dropdown tipo SIE -->
+            <ul class="dropdown-menu text-start" style="position:absolute; top:100%; left:0;">
+                <li><a class="dropdown-item" href="{% url 'login_alumno' %}">Alumno</a></li>
+                <li><a class="dropdown-item" href="{% url 'login_docente' %}">Docente</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<!-- ÚLTIMAS NOTICIAS -->
+<div class="container mt-5">
+    <h3 class="mb-3">Últimas noticias</h3>
+    <ul class="list-group">
+    {% for n in noticias %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong>{{ n.titulo }}</strong>
+            <span class="badge bg-primary rounded-pill">{{ n.fecha }}</span>
+        </li>
+    {% empty %}
+        <p>En el Telebachillerato de Veracruz (TEBAEV) plantel Telebachillerato de Nopaltepec, ofrece a la comunidad una educación media superior de calidad, cercana y accesible, dirigida a jóvenes y adultos que desean continuar sus estudios y fortalecer sus oportunidades académicas y laborales.</p>
+
+<p>🎓 Modalidad de Estudio</p>
+
+<p>-Escolarizada</p>
+
+<p>-Clases de lunes a viernes</p>
+
+<p>-Atención personalizada en grupos reducidos</p>
+
+<p>-Acompañamiento académico continuo</p>
+
+<p>📚 Plan de Estudios</p>
+
+<p>Nuestro programa está basado en el Marco Curricular Común de la Educación Media Superior, e incluye las siguientes áreas formativas:</p>
+
+<p>Área Básica</p>
+
+<p>-Matemáticas I, II y III</p>
+
+<p>-Comunicación (Lectura, Redacción)</p>
+
+<p>-Ciencias Naturales: Biología, Química y Física</p>
+
+<p>-Ciencias Sociales: Historia de México, Historia Universal, Geografía, Estructura Socioeconómica de México</p>
+
+<p>Área Propedéutica</p>
+
+<p>-Orientación educativa y vocacional</p>
+
+<p>-Preparación para estudios universitarios</p>
+
+<p>-Desarrollo del pensamiento crítico y habilidades científicas</p>
+
+<p>Área para el Trabajo</p>
+
+<p>Informática</p>
+
+<p>Emprendimiento</p>
+
+<p>Proyectos productivos y comunitarios</p>
+
+<p>🧑‍🏫 Acompañamiento</p>
+
+<p>Docentes certificados y con amplia experiencia</p>
+
+<p>Tutorías académicas y asesorías personalizadas</p>
+
+<p>Actividades culturales, deportivas y de integración</p>
+
+<p>🏫 Infraestructura</p>
+
+<p>Aulas equipadas</p>
+
+<p>Material digital y recursos didácticos</p>
+
+<p>Acceso a plataformas educativas</p>
+
+<p>Espacios para actividades físicas y recreativas</p>
+
+<p>🎯 Objetivo del TEBAEV</p>
+
+<p>Brindar a los estudiantes una formación integral que les permita:</p>
+
+<p>Continuar hacia estudios superiores</p>
+
+<p>Inserción laboral con mejores herramientas</p>
+
+<p>Desarrollo de competencias ciudadanas y comunitarias</p>
+
+<p>📅 Inscripciones</p>
+
+<p>Período: Enero-Julio</p>
+
+<p>Requisitos:</p>
+
+<p>Certificado de secundaria</p>
+
+<p>Acta de nacimiento</p>
+
+<p>CURP</p>
+
+<p>Comprobante de domicilio</p>
+
+<p>2 fotografías tamaño infantil</p>
+    {% endfor %}
+    </ul>
+</div>
+
+<!-- PIE DE PÁGINA -->
+<footer class="text-center mt-5 py-3 bg-light">
+    <small>© 2025 TEBAEV | Sitio en desarrollo con Django</small>
+</footer>
+
+{% endblock %}

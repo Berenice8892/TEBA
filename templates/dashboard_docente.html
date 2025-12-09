@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .card-stats {
+        border-radius: 15px;
+        transition: transform .2s, box-shadow .2s;
+    }
+    .card-stats:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .icon-circle {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+    }
+</style>
+
+<div class="container mt-4">
+
+    <h1 class="mb-4 fw-bold"><i class="fas fa-chalkboard-teacher"></i> Dashboard del Docente</h1>
+
+    <div class="row g-4">
+
+        <!-- Total alumnos -->
+        <div class="col-md-4">
+            <div class="card card-stats shadow bg-primary text-white">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-circle bg-white text-primary me-3">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div>
+                        <h6>Total Alumnos</h6>
+                        <h2 class="fw-bold">{{ total_alumnos }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calificaciones -->
+        <div class="col-md-4">
+            <div class="card card-stats shadow bg-success text-white">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-circle bg-white text-success me-3">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div>
+                        <h6>Total Calificaciones</h6>
+                        <h2 class="fw-bold">{{ total_calificaciones }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Promedio General -->
+        <div class="col-md-4">
+            <div class="card card-stats shadow bg-warning text-white">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-circle bg-white text-warning me-3">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h6>Promedio General</h6>
+                        <h2 class="fw-bold">{{ promedio_general }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="mt-4 text-center">
+    <a href="{% url 'pdf_alumnos' %}" class="btn btn-danger btn-lg shadow">
+        <i class="fas fa-file-pdf"></i> Descargar PDF de Alumnos
+    </a>
+</div>
+<div class="mt-4 text-center">
+    <h5>Generar PDF de un alumno específico</h5>
+    <form method="get" action="" class="d-flex justify-content-center align-items-center gap-2 mt-2">
+        <select class="form-select" id="alumno_select">
+            <option value="">Selecciona un alumno</option>
+            {% for alumno in todos_los_alumnos %}
+            <option value="{{ alumno.no_control }}">{{ alumno.nombre }} ({{ alumno.no_control }})</option>
+            {% endfor %}
+        </select>
+        <a id="btn_descargar_alumno" class="btn btn-primary btn-lg shadow">
+            <i class="fas fa-file-pdf"></i> Descargar PDF
+        </a>
+    </form>
+</div>
+
+<script>
+    const select = document.getElementById('alumno_select');
+    const btn = document.getElementById('btn_descargar_alumno');
+
+    btn.addEventListener('click', function() {
+        const no_control = select.value;
+        if (!no_control) {
+            alert('Selecciona un alumno primero.');
+            return;
+        }
+        window.location.href = "{% url 'pdf_alumno' 'NO_CONTROL' %}".replace('NO_CONTROL', no_control);
+    });
+</script>
+
+
+    <!-- Alertas de bajo desempeño -->
+    {% if alertas_bajas %}
+    <div class="alert alert-danger mt-4 shadow">
+        <h5><i class="fas fa-exclamation-triangle"></i> Alumnos con promedio menor a 8</h5>
+        <ul class="mb-0">
+            {% for alerta in alertas_bajas %}
+            <li><strong>{{ alerta.alumno.nombre }}</strong> – Promedio: {{ alerta.promedio }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- Gráfica -->
+    <div class="mt-5 card shadow p-4">
+        <h4 class="fw-bold"><i class="fas fa-chart-bar"></i> Promedio por materia</h4>
+        <canvas id="graficaMaterias" height="120"></canvas>
+    </div>
+
+    <!-- Botón ver alumnos -->
+    <div class="mt-4 text-center">
+        <a href="{% url 'lista_alumnos_docente' %}" class="btn btn-primary btn-lg shadow">
+            <i class="fas fa-users"></i> Ver Todos los Alumnos
+        </a>
+        <a href="{% url 'dashboard_docente' %}" class="btn btn-secondary mb-3">Regresar</a>
+    </div>
+
+</div>
+
+
+<!-- Librerías -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://kit.fontawesome.com/a2e0e9a0b0.js" crossorigin="anonymous"></script>
+
+<script>
+var ctx = document.getElementById('graficaMaterias').getContext('2d');
+
+var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ materias|safe }},
+        datasets: [{
+            label: 'Promedio por Materia',
+            data: {{ promedios_materia|safe }},
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.7)',
+                'rgba(75, 192, 192, 0.7)',
+                'rgba(255, 206, 86, 0.7)',
+                'rgba(255, 99, 132, 0.7)',
+                'rgba(153, 102, 255, 0.7)'
+            ],
+            borderColor: 'rgba(0,0,0,0.1)',
+            borderWidth: 1,
+            borderRadius: 10
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 10,
+                grid: { color: "#e0e0e0" }
+            },
+            x: {
+                grid: { display: false }
+            }
+        }
+    }
+});
+</script>
+
+{% endblock %}
