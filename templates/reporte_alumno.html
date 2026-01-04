@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte de Calificaciones</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #000;
+            margin: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .datos {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .datos p {
+            margin: 4px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            background-color: #1f4e79;
+            color: #ffffff;
+            padding: 8px;
+            border: 1px solid #000;
+            text-align: center;
+        }
+
+        td {
+            padding: 6px;
+            border: 1px solid #000;
+            text-align: center;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 10px;
+            color: #555;
+        }
+
+        .firmas {
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .firma {
+            width: 40%;
+            text-align: center;
+        }
+
+        .linea {
+            border-top: 1px solid #000;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Boleta de Calificaciones</h1>
+    <h2>Reporte Académico del Alumno</h2>
+
+    <div class="datos">
+        <p><strong>Nombre:</strong> {{ alumno.nombre }}</p>
+        <p><strong>No. de Control:</strong> {{ alumno.no_control }}</p>
+        <p><strong>Periodo Actual:</strong> {{ alumno.periodo_actual }}</p>
+        <p><strong>Plan de Estudios:</strong> {{ alumno.plan_estudios }}</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Materia</th>
+                <th>Calificación</th>
+                <th>Periodo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in calificaciones %}
+                <tr>
+                    <td>{{ c.materia }}</td>
+                    <td>{{ c.calificacion }}</td>
+                    <td>{{ c.periodo }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">No hay calificaciones registradas</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="firmas">
+        <div class="firma">
+            <div class="linea"></div>
+            <p>Firma del Tutor</p>
+        </div>
+
+        <div class="firma">
+            <div class="linea"></div>
+            <p>Firma del Alumno</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Documento generado automáticamente por el sistema</p>
+    </div>
+
+</body>
+</html>

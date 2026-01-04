@@ -27,7 +27,6 @@
     <h1 class="mb-4 fw-bold"><i class="fas fa-chalkboard-teacher"></i> Dashboard del Docente</h1>
 
     <div class="row g-4">
-
         <!-- Total alumnos -->
         <div class="col-md-4">
             <div class="card card-stats shadow bg-primary text-white">
@@ -72,42 +71,29 @@
                 </div>
             </div>
         </div>
-
     </div>
+
+    <!-- PDF -->
     <div class="mt-4 text-center">
-    <a href="{% url 'pdf_alumnos' %}" class="btn btn-danger btn-lg shadow">
-        <i class="fas fa-file-pdf"></i> Descargar PDF de Alumnos
-    </a>
-</div>
-<div class="mt-4 text-center">
-    <h5>Generar PDF de un alumno específico</h5>
-    <form method="get" action="" class="d-flex justify-content-center align-items-center gap-2 mt-2">
-        <select class="form-select" id="alumno_select">
-            <option value="">Selecciona un alumno</option>
-            {% for alumno in todos_los_alumnos %}
-            <option value="{{ alumno.no_control }}">{{ alumno.nombre }} ({{ alumno.no_control }})</option>
-            {% endfor %}
-        </select>
-        <a id="btn_descargar_alumno" class="btn btn-primary btn-lg shadow">
-            <i class="fas fa-file-pdf"></i> Descargar PDF
+        <a href="{% url 'pdf_alumnos' %}" class="btn btn-danger btn-lg shadow">
+            <i class="fas fa-file-pdf"></i> Descargar PDF de Alumnos
         </a>
-    </form>
-</div>
+    </div>
 
-<script>
-    const select = document.getElementById('alumno_select');
-    const btn = document.getElementById('btn_descargar_alumno');
-
-    btn.addEventListener('click', function() {
-        const no_control = select.value;
-        if (!no_control) {
-            alert('Selecciona un alumno primero.');
-            return;
-        }
-        window.location.href = "{% url 'pdf_alumno' 'NO_CONTROL' %}".replace('NO_CONTROL', no_control);
-    });
-</script>
-
+    <div class="mt-4 text-center">
+        <h5>Generar PDF de un alumno específico</h5>
+        <form method="get" class="d-flex justify-content-center align-items-center gap-2 mt-2">
+            <select class="form-select" id="alumno_select">
+                <option value="">Selecciona un alumno</option>
+                {% for alumno in todos_los_alumnos %}
+                <option value="{{ alumno.no_control }}">{{ alumno.nombre }} ({{ alumno.no_control }})</option>
+                {% endfor %}
+            </select>
+            <a id="btn_descargar_alumno" class="btn btn-primary btn-lg shadow">
+                <i class="fas fa-file-pdf"></i> Descargar PDF
+            </a>
+        </form>
+    </div>
 
     <!-- Alertas de bajo desempeño -->
     {% if alertas_bajas %}
@@ -121,7 +107,7 @@
     </div>
     {% endif %}
 
-    <!-- Gráfica -->
+    <!-- Gráfica Promedio por Materia -->
     <div class="mt-5 card shadow p-4">
         <h4 class="fw-bold"><i class="fas fa-chart-bar"></i> Promedio por materia</h4>
         <canvas id="graficaMaterias" height="120"></canvas>
@@ -137,47 +123,73 @@
 
 </div>
 
-
 <!-- Librerías -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://kit.fontawesome.com/a2e0e9a0b0.js" crossorigin="anonymous"></script>
 
-<script>
-var ctx = document.getElementById('graficaMaterias').getContext('2d');
+<!-- JSON seguro de Django -->
+{{ materias|json_script:"materias_json" }}
+{{ promedios_materia|json_script:"promedios_json" }}
 
-var chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: {{ materias|safe }},
-        datasets: [{
-            label: 'Promedio por Materia',
-            data: {{ promedios_materia|safe }},
-            backgroundColor: [
-                'rgba(54, 162, 235, 0.7)',
-                'rgba(75, 192, 192, 0.7)',
-                'rgba(255, 206, 86, 0.7)',
-                'rgba(255, 99, 132, 0.7)',
-                'rgba(153, 102, 255, 0.7)'
-            ],
-            borderColor: 'rgba(0,0,0,0.1)',
-            borderWidth: 1,
-            borderRadius: 10
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            y: {
-                beginAtZero: true,
-                max: 10,
-                grid: { color: "#e0e0e0" }
-            },
-            x: {
-                grid: { display: false }
+<script>
+    const materias = JSON.parse(document.getElementById('materias_json').textContent);
+    const promedios = JSON.parse(document.getElementById('promedios_json').textContent);
+
+    // Generar colores aleatorios para cada materia
+    function generarColores(n) {
+        const colores = [];
+        for(let i=0; i<n; i++){
+            const r = Math.floor(Math.random()*156 + 100); // 100-255
+            const g = Math.floor(Math.random()*156 + 100);
+            const b = Math.floor(Math.random()*156 + 100);
+            colores.push(`rgba(${r}, ${g}, ${b}, 0.7)`);
+        }
+        return colores;
+    }
+
+    const colores = generarColores(materias.length);
+
+    // Gráfica
+    var ctx = document.getElementById('graficaMaterias').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: materias,
+            datasets: [{
+                label: 'Promedio por Materia',
+                data: promedios,
+                backgroundColor: colores,
+                borderColor: 'rgba(0,0,0,0.1)',
+                borderWidth: 1,
+                borderRadius: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 10,
+                    grid: { color: "#e0e0e0" }
+                },
+                x: {
+                    grid: { display: false }
+                }
             }
         }
-    }
-});
+    });
+
+    // PDF alumno individual
+    const select = document.getElementById('alumno_select');
+    const btn = document.getElementById('btn_descargar_alumno');
+    btn.addEventListener('click', function() {
+        const no_control = select.value;
+        if (!no_control) {
+            alert('Selecciona un alumno primero.');
+            return;
+        }
+        window.location.href = "{% url 'pdf_alumno' 'NO_CONTROL' %}".replace('NO_CONTROL', no_control);
+    });
 </script>
 
 {% endblock %}

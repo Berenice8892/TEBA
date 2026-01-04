@@ -31,7 +31,7 @@ def descargar_pdf_alumno(request, no_control):
     alumno = get_object_or_404(Alumno, no_control=no_control)
     calificaciones = alumno.calificaciones.all()
 
-    html_string = render_to_string('pdf/reporte_alumno.html', {
+    html_string = render_to_string('reporte_alumno.html', {
         'alumno': alumno,
         'calificaciones': calificaciones
     })

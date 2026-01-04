@@ -25,7 +25,7 @@ urlpatterns = [
     # Login Docente
     path('login/docente/', views.login_docente, name='login_docente'),
     path('docente/dashboard/', views.dashboard_docente, name='dashboard_docente'),
-    path('alumnos/', views.lista_alumnos, name='lista_alumnos'),  # <- asegúrate de esto
+    path('alumnos/', views.lista_alumnos, name='lista_alumnos'),  
     
 
     # Alumnos (Docente)
@@ -44,5 +44,5 @@ urlpatterns = [
     path('docente/pdf-alumno/<str:no_control>/', views.descargar_pdf_alumno, name='pdf_alumno'),
     path('editar_calificacion/<int:id>/', views.editar_calificacion, name='editar_calificacion'),
     path('eliminar_calificacion/<int:id>/', views.eliminar_calificacion, name='eliminar_calificacion'),
-
+    path('docente/pdf-alumno/<str:no_control>/', views.descargar_pdf_alumno, name='descargar_pdf_alumno'),
 ]
