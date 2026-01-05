@@ -1,0 +1,9 @@
+Django==5.1.7
+gunicorn
+weasyprint
+xhtml2pdf
+reportlab
+pillow
+python-dotenv
+dj-database-url
+mysqlclient
