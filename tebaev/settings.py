@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-9=2de-z9h_$*rd=k$+4q$+_s7g1fe1n-y3wo0s0pqk@wq#&2r9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
 
 
 # Application definition
@@ -116,13 +117,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+# Carpeta de tus archivos estáticos de desarrollo
 STATICFILES_DIRS = [
     BASE_DIR / "tebaev/static",
 ]
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
+# Carpeta donde Django colocará todos los archivos estáticos listos para producción
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Media files (uploads)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
