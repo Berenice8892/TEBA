@@ -6,7 +6,5 @@ django-cors-headers>=4.7,<5
 # Gunicorn para el servidor en Render
 gunicorn
 
-# Otras dependencias útiles si las usas en tu app
+# Variables de entorno
 python-dotenv>=1.2,<2
-
-
