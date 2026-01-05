@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['*']
 
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'tebaev.urls'
 
@@ -117,19 +120,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+import os
+
+# Carpeta donde Django pondrá los archivos estáticos
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# URL para acceder a ellos
 STATIC_URL = '/static/'
 
-# Carpeta de tus archivos estáticos de desarrollo
-STATICFILES_DIRS = [
-    BASE_DIR / "tebaev/static",
-]
-
-# Carpeta donde Django colocará todos los archivos estáticos listos para producción
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
-# Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Media files (uploads)
+# Opcional: si también quieres servir media (imágenes subidas)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
