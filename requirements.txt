@@ -10,3 +10,4 @@ gunicorn
 python-dotenv>=1.2,<2
 
 whitenoise
+Pillow>=10.0.0
