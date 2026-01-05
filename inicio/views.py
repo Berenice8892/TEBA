@@ -1,4 +1,4 @@
-from tkinter import Image
+from PIL import Image
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q,Avg
 from django.contrib import messages
@@ -74,7 +74,7 @@ def descargar_calificaciones_pdf(request, no_control):
     # --- LOGO ---
     logo_path = os.path.join(settings.MEDIA_ROOT, 'LOGOO.jpg')  # tu logo en MEDIA
     if os.path.exists(logo_path):
-        logo = Image(logo_path, width=120, height=120)
+        logo = Image.open(logo_path, width=120, height=120)
         logo.hAlign = 'CENTER'
         elements.append(logo)
 

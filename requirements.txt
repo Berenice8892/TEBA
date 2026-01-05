@@ -7,3 +7,4 @@ pillow
 python-dotenv
 dj-database-url
 mysqlclient
+Pillow==12.0.0
