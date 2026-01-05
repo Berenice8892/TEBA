@@ -12,3 +12,5 @@ python-dotenv>=1.2,<2
 whitenoise
 Pillow>=10.0.0
 xhtml2pdf
+xhtml2pdf==0.2.17
+weasyprint

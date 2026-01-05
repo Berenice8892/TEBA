@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: tebaev-web
+    env: python
+    pythonVersion: 3.11
+    plan: free  # puedes cambiar al plan que uses
+    buildCommand: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+    startCommand: gunicorn TEBAEV.wsgi:application  # Cambia "TEBAEV" al nombre de tu proyecto Django
+    autoDeploy: true
