@@ -8,3 +8,5 @@ gunicorn
 
 # Variables de entorno
 python-dotenv>=1.2,<2
+
+whitenoise
