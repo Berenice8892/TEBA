@@ -1,10 +1,18 @@
-# Python
+# Entorno virtual
+venv/
+env/
+
+# Archivos compilados de Python
 __pycache__/
 *.pyc
 
-# Django
-staticfiles/
+# Base de datos
 db.sqlite3
 
-# Entornos
-.env
+# Archivos de migración
+*/migrations/*
+!*/migrations/__init__.py
+
+# Archivos estáticos y media
+staticfiles/
+media/
