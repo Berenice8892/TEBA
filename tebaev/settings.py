@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-9=2de-z9h_$*rd=k$+4q$+_s7g1fe1n-y3wo0s0pqk@wq#&2r9
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['teba.onrender.com']
+ALLOWED_HOSTS = ['telebachillerato-qp8q.onrender.com']
 
 
 
